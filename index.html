@@ -3,89 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Después de la Tormenta</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <title>Después de la Tormenta - Parroquia La Santísima Trinidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --tormenta: #1a252f;
+            --calma: #fdfbf7;
+            --oro: #d4af37;
+            --texto-dark: #2c3e50;
+        }
+
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; min-height: 100%; font-family: 'Montserrat', sans-serif; transition: background 1s; }
-        body.tormenta-mood { background: linear-gradient(180deg, #0f0c29, #302b63, #24243e); color: white; display: flex; align-items: center; justify-content: center; }
-        body.calma-mood { background: #fdfbf7; color: #2c3e50; overflow-y: auto; }
-        .container { width: 100%; max-width: 600px; padding: 40px 20px; text-align: center; margin: auto; }
-        textarea { width: 100%; height: 180px; background: rgba(255,255,255,0.1); border: 2px solid #f1c40f; border-radius: 20px; color: white; padding: 20px; font-size: 1.1rem; margin: 25px 0; outline: none; }
-        .btn-principal { background: #f1c40f; color: #1a252f; border: none; padding: 18px 50px; border-radius: 50px; font-weight: 700; cursor: pointer; }
-        .seccion-biblica { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 30px; text-align: left; animation: slideUp 1s ease; }
-        .capitulo-verso { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 1.5rem; border-bottom: 1px solid #eee; margin-bottom: 15px; }
-        .etiqueta { font-weight: 700; color: #a67c00; text-transform: uppercase; font-size: 0.8rem; display: block; margin-top: 15px; }
+        body, html { margin: 0; padding: 0; min-height: 100%; font-family: 'Montserrat', sans-serif; transition: 2s; }
+        
+        body.mood-tormenta { background: var(--tormenta); color: white; }
+        body.mood-calma { background: var(--calma); color: var(--texto-dark); }
+
+        .container { width: 100%; max-width: 850px; margin: auto; padding: 40px 20px; text-align: center; }
         .hidden { display: none !important; }
-        #flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; z-index: 999; }
-        @keyframes flash-anim { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .vibras-sello { margin: 40px 0; font-size: 0.7rem; letter-spacing: 5px; color: #bbb; text-align: center; }
+
+        /* HEADER PARROQUIA */
+        .header-parroquia { margin-bottom: 30px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px; }
+        .header-parroquia h3 { font-family: 'Playfair Display', serif; color: var(--oro); margin: 0; letter-spacing: 1px; }
+        .header-parroquia p { font-size: 0.8rem; text-transform: uppercase; margin: 5px 0 0; opacity: 0.7; }
+
+        /* RELOJ COLOMBIA */
+        #reloj-colombia { font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8; font-weight: bold; }
+
+        /* ESTILOS DE COMPONENTES */
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 25px 0; text-align: left; color: var(--texto-dark); animation: fadeIn 1s ease; line-height: 1.8; }
+        textarea { width: 100%; height: 140px; border-radius: 15px; padding: 15px; margin: 15px 0; border: 2px solid var(--oro); font-size: 1rem; outline: none; background: rgba(255,255,255,0.9); }
+        button { background: var(--oro); color: white; border: none; padding: 18px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        button:hover { transform: scale(1.03); background: #b8962d; }
+        
+        .etapa-item { border-left: 5px solid var(--oro); padding-left: 25px; margin-bottom: 40px; }
+        .etapa-titulo { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #a67c00; margin-bottom: 15px; }
+        .etapa-texto { text-align: justify; font-size: 1.05rem; }
+        
+        .nube { font-size: 80px; animation: flotar 3s infinite ease-in-out; }
+        @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .creditos { font-size: 0.9rem; line-height: 1.6; color: #666; margin-top: 60px; border-top: 1px solid #ddd; padding-top: 30px; font-weight: 500; }
+        h1, h2 { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="tormenta-mood">
-    <div id="flash"></div>
+<body class="mood-tormenta">
 
-    <div class="container" id="box-tormenta">
-        <div style="font-size: 60px;">⚡</div>
-        <h1 style="font-family: 'Playfair Display', serif;">Soltar para Sanar</h1>
-        <textarea id="texto-usuario" placeholder="¿Qué tormenta hay en tu corazón hoy?"></textarea>
-        <button class="btn-principal" onclick="generarCalma()">BUSCAR LA CALMA</button>
-    </div>
+    <div class="container">
+        <div class="header-parroquia">
+            <h3>PARROQUIA DE LA SANTÍSIMA TRINIDAD</h3>
+            <p>Caucasia, Antioquia</p>
+        </div>
 
-    <div class="container hidden" id="box-calma">
-        <div style="font-size: 70px;">☀️</div>
-        <h1 style="font-family: 'Playfair Display', serif;">Llega la Calma</h1>
-        <div id="contenido-dinamico"></div>
-        <button onclick="location.reload()" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 12px 25px; border-radius: 30px; cursor: pointer; margin-top: 30px;">OTRA REFLEXIÓN</button>
-        <div class="vibras-sello">✨ VIBRAS POSITIVAS ✨</div>
+        <div id="reloj-colombia">Cargando hora de Colombia...</div>
+
+        <div id="step-esposa">
+            <div style="font-size: 60px;">⚡</div>
+            <h1>Tormenta: Turno de la Esposa</h1>
+            <p>Escriba aquí aquello que genera tempestad en su corazón o su hogar. Al entregar estas palabras, abre espacio para la bendición.</p>
+            <textarea id="msg-esposa" placeholder="Esposa, suelte aquí su carga ante el Señor..."></textarea>
+            <br><button onclick="irAEsposo()">Siguiente Rayito</button>
+        </div>
+
+        <div id="step-esposo" class="hidden">
+            <div style="font-size: 60px;">⚡</div>
+            <h1>Tormenta: Turno del Esposo</h1>
+            <p>Caballero, es su turno de ser honesto. Deposite en este rayito lo que nubla su paz matrimonial para que Dios tome el control.</p>
+            <textarea id="msg-esposo" placeholder="Esposo, entregue aquí lo que le angustia..."></textarea>
+            <br><button onclick="irACalma()">Transformar en Calma</button>
+        </div>
+
+        <div id="step-calma" class="hidden">
+            <div class="nube">☁️</div>
+            <h1>Nube de Esperanza</h1>
+            
+            <div id="biblia-dinamica"></div>
+
+            <hr style="margin: 50px 0; border: 0; border-top: 2px dashed var(--oro);">
+
+            <h1 style="font-size: 2.5rem;">Las 7 Etapas del Amor Maduro</h1>
+            <p style="margin-bottom: 40px; font-style: italic;">Un camino de crecimiento guiado por la fe y el entendimiento mutuo.</p>
+            <div id="etapas-container"></div>
+
+            <div class="card" style="background: #fff9e6; border: 1px solid #f9e2af;">
+                <h2 style="text-align: center; color: #856404;">Cátedra del Buen Comportamiento</h2>
+                <p>Para restaurar la llama que los unió en el noviazgo, es imperativo implementar la <strong>"Pedagogía del Amor"</strong>. Esto implica volver a las bases: el saludo cálido, el agradecimiento por las pequeñas cosas y el perdón rápido. Recuerden que la cortesía no es solo para los extraños; es, sobre todo, para el cónyuge. Un matrimonio saludable no es aquel que no tiene problemas, sino aquel que sabe comportarse con caridad y ternura en medio de las dificultades, manteniendo siempre la dignidad y el respeto por el sacramento que un día juraron ante el altar de Dios.</p>
+                <ul style="text-align: left; line-height: 2;">
+                    <li><strong>El Detalle:</strong> La sorpresa diaria mantiene vivo el asombro del encuentro inicial.</li>
+                    <li><strong>La Mirada:</strong> Conectar visualmente es reconocer el alma del otro.</li>
+                    <li><strong>La Oración:</strong> Una pareja que se arrodilla ante Dios, siempre se mantiene en pie ante la vida.</li>
+                </ul>
+            </div>
+
+            <div class="creditos">
+                <p>App desarrollada por: <strong>Vibras Positivas (3117700431)</strong></p>
+                <p>Para la Parroquia: <strong>La Santísima Trinidad (Barrio El Triángulo)</strong></p>
+                <p>Bajo la supervisión espiritual del: <strong>Padre Joan Daza</strong></p>
+            </div>
+            
+            <button onclick="location.reload()" style="background: #333; margin-bottom: 60px;">Iniciar Nuevo Proceso</button>
+        </div>
     </div>
 
     <script>
-        const lecciones = [
-            {
-                cita: "Marcos 4:39",
-                texto: '"Y levantándose, reprendió al viento, y dijo al mar: Callas, enmudece. Y cesó el viento, y se hizo grande bonanza."',
-                contexto: "Los discípulos estaban en el Mar de Galilea, propenso a tormentas súbitas. A pesar de ser expertos navegantes, el miedo los cegó. Jesús demostró autoridad absoluta sobre la creación con solo Su palabra.",
-                aplicacion: "En la pareja, las tormentas no se calman gritando más fuerte que el viento, sino permitiendo que la autoridad de Cristo gobierne nuestras emociones. Callar el orgullo es dejar que Él hable."
-            },
-            {
-                cita: "Efesios 4:26",
-                texto: '"Airaos, pero no pequéis; no se ponga el sol sobre vuestro enojo."',
-                contexto: "Pablo escribía a una iglesia diversa con conflictos internos. En el mundo antiguo, dejar pasar el tiempo sin resolver deudas o pleitos destruía comunidades enteras.",
-                aplicacion: "Sentir enojo es humano, pero retenerlo es tóxico. Esta app es tu recordatorio de que la tormenta debe morir antes de que termine el día para que el mañana nazca limpio."
-            },
-            {
-                cita: "Eclesiastés 4:12",
-                texto: '"Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto."',
-                contexto: "Salomón reflexiona sobre la vanidad de la vida en solitario. Un cordón de tres hilos era una técnica de tejido militar y comercial para asegurar que la carga no se cayera.",
-                aplicacion: "Ustedes son dos hilos, pero el tercer hilo es Dios. Si intentan calmar la tormenta solos, el cordón se tensa; si dejan que Dios sea el centro, la unión se vuelve irrompible."
-            }
+        function actualizarReloj() {
+            const opciones = { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, day: '2-digit', month: 'long', year: 'numeric' };
+            const ahora = new Date().toLocaleString('es-CO', opciones);
+            document.getElementById('reloj-colombia').innerHTML = "🇨🇴 Colombia: " + ahora;
+        }
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+
+        const baseBiblica = [
+            { v: "Marcos 4:39", t: '"Callas, enmudece. Y cesó el viento, y se hizo grande bonanza."', c: "Los discípulos, aun con Jesús en la barca, sintieron miedo. Él demostró que Su autoridad está por encima de cualquier crisis natural o espiritual.", a: "Si sienten que su barca se hunde, invoquen la autoridad de Cristo. Él tiene el poder de restaurar el silencio y la paz en su hogar." },
+            { v: "1 Corintios 13:4-5", t: '"El amor es sufrido, es benigno; el amor no tiene envidia... no se irrita, no guarda rencor."', c: "San Pablo nos enseña que el amor no es una emoción pasajera, sino una virtud que se practica con paciencia.", a: "Cuando la irritación aparezca, miren la cruz. El amor maduro perdona y decide volver a empezar sin reproches." }
         ];
 
-        function generarCalma() {
-            if(document.getElementById('texto-usuario').value.trim() === "") return alert("Socia, escribe algo primero.");
-            
-            document.getElementById('flash').style.animation = "flash-anim 0.6s ease-out";
+        function irAEsposo() {
+            if(document.getElementById('msg-esposa').value.length < 5) return alert("Por favor, esposa, exprese un poco más sus sentimientos.");
+            document.getElementById('step-esposa').classList.add('hidden');
+            document.getElementById('step-esposo').classList.remove('hidden');
+        }
 
-            setTimeout(() => {
-                const azar = lecciones[Math.floor(Math.random() * lecciones.length)];
-                const html = `
-                    <div class="seccion-biblica">
-                        <div class="capitulo-verso">${azar.cita}</div>
-                        <p style="font-style:italic; font-size:1.1rem;">${azar.texto}</p>
-                        <span class="etiqueta">Contexto Histórico</span>
-                        <p>${azar.contexto}</p>
-                        <span class="etiqueta">Aplicación a la Realidad</span>
-                        <p>${azar.aplicacion}</p>
-                    </div>`;
-                
-                document.getElementById('contenido-dinamico').innerHTML = html;
-                document.body.className = "calma-mood";
-                document.getElementById('box-tormenta').classList.add('hidden');
-                document.getElementById('box-calma').classList.remove('hidden');
-                window.scrollTo(0,0);
-            }, 500);
+        function irACalma() {
+            if(document.getElementById('msg-esposo').value.length < 5) return alert("Por favor, esposo, exprese un poco más sus sentimientos.");
+            document.body.className = "mood-calma";
+            document.getElementById('step-esposo').classList.add('hidden');
+            document.getElementById('step-calma').classList.remove('hidden');
+            
+            const random = baseBiblica[Math.floor(Math.random() * baseBiblica.length)];
+            document.getElementById('biblia-dinamica').innerHTML = `
+                <div class="card">
+                    <h2 style="color: var(--oro); border-bottom: 1px solid #eee;">${random.v} - Reflexión de Fe</h2>
+                    <p style="font-size: 1.2rem; text-align:center;"><i>${random.t}</i></p>
+                    <p><strong>Contexto Histórico:</strong> ${random.c}</p>
+                    <p><strong>Adaptación a su Realidad:</strong> ${random.a}</p>
+                </div>`;
+
+            mostrarEtapas();
+            window.scrollTo(0,0);
+        }
+
+        function mostrarEtapas() {
+            const etapas = [
+                { t: "1. Transición y Enamoramiento (Eros)", d: "Esta es la etapa del deslumbramiento inicial, donde la atracción física y química domina el encuentro. Es un periodo de idealización profunda en el que los defectos del otro parecen inexistentes o incluso encantadores. Sin embargo, desde una perspectiva cristiana, el Eros no debe ser solo pasión ciega, sino el punto de partida para descubrir la belleza de la creación de Dios en el cónyuge. El desafío fundamental en este primer ciclo es entender que este fuego es transitorio por naturaleza y que su propósito divino es servir como el 'pegamento' inicial que permite a la pareja acercarse lo suficiente para comenzar a construir un proyecto de vida sólido sobre cimientos mucho más profundos que la simple apariencia o el deseo carnal." },
+                { t: "2. Realidad y Desilusión", d: "A medida que la convivencia avanza, la venda de la idealización cae y emerge la realidad humana con toda su complejidad. Aquí es donde los hábitos molestos, las diferencias de criterio y las debilidades personales se hacen evidentes. Muchos matrimonios entran en crisis en este punto porque confunden el fin del enamoramiento con el fin del amor. No obstante, esta etapa es crucial para el crecimiento, pues es el momento en que se deja de amar a una imagen perfecta para empezar a amar a una persona real. Es un llamado a la madurez espiritual donde la pareja debe aprender a negociar, a ceder y a comprender que el matrimonio es un taller de santificación mutua donde las asperezas se pulen con paciencia y oración constante." },
+                { t: "3. Establecimiento de Roles y Poder", d: "En esta fase, la pareja lucha por definir quién tiene la autoridad en diferentes áreas o cómo se distribuirán las responsabilidades del hogar, las finanzas y la crianza. Es un periodo de 'ajuste de cuentas' donde pueden surgir conflictos por el control. La enseñanza de la Iglesia nos invita a ver esta etapa no como una lucha de poder, sino como una oportunidad para el servicio mutuo. No se trata de quién manda, sino de cómo ambos pueden servir mejor al bienestar de la familia. El éxito aquí depende de la capacidad de comunicación asertiva y de la humildad para reconocer que la unión matrimonial funciona mejor cuando se opera como un solo cuerpo, donde cada miembro aporta sus dones para el beneficio del conjunto, sin egoísmos ni imposiciones." },
+                { t: "4. Estabilidad y Rutina", d: "Tras superar las luchas iniciales de roles, el matrimonio suele entrar en una meseta de tranquilidad que, paradójicamente, conlleva el riesgo de la monotonía. La vida se vuelve predecible y la atención se desplaza hacia los hijos, el trabajo o los compromisos sociales, descuidando a veces la relación de pareja. En esta etapa, es vital recordar que el amor es un fuego que requiere leña constante para no extinguirse. La estabilidad debe ser vista como un refugio seguro, pero no como una zona de confort que justifique el descuido. Es el momento de reinventar los detalles, de cultivar intereses comunes y de asegurar que el cónyuge siga siendo la prioridad absoluta, protegiendo el espacio sagrado de la pareja frente a las distracciones externas del mundo moderno." },
+                { t: "5. Profundización y Amistad (Philia)", d: "Aquí el amor trasciende la pasión y la simple convivencia para convertirse en una amistad profunda y sólida. Es la etapa de la complicidad, donde los esposos se conocen tanto que las palabras a veces sobran. Se han compartido alegrías inmensas y dolores profundos, lo que ha forjado un vínculo de lealtad inquebrantable. La 'Philia' representa ese amor de amigos que se eligen una y otra vez cada mañana. Desde la fe, este es el cumplimiento del compañerismo que Dios deseó para el hombre y la mujer. En esta fase, el matrimonio se convierte en un puerto seguro donde ambos encuentran descanso y comprensión, habiendo aprendido ya que la felicidad del otro es tan importante como la propia, y que caminar juntos es el regalo más grande de la vida." },
+                { t: "6. Compromiso Renovado y Crisis de la Mediana Edad", d: "Llega un momento en que la pareja reflexiona sobre lo vivido y lo que falta por vivir. Pueden surgir dudas o el deseo de recuperar una juventud perdida, lo que a veces genera nuevas tensiones. Sin embargo, para un matrimonio cimentado en la roca de la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con una conciencia mucho más clara de lo que implica la fidelidad. Es un periodo de gran fecundidad espiritual, donde la pareja, ya más sabia, puede servir de guía a otros matrimonios jóvenes, demostrando con su testimonio que el amor sí puede prevalecer sobre el tiempo y las pruebas si se mantiene la mirada puesta en Dios." },
+                { t: "7. Amor Incondicional (Agape)", d: "Esta es la cima del matrimonio, el reflejo más puro del amor de Dios por la humanidad. El amor Agape es aquel que se entrega totalmente sin esperar nada a cambio; es un amor sacrificial, generoso y lleno de gracia. En esta etapa, los esposos viven el uno para el otro con una ternura que ha sido purificada por los años. Ya no se busca la satisfacción personal, sino la santidad y el bienestar del compañero. Es un estado de paz profunda donde se comprende que el matrimonio fue el camino diseñado por Dios para llevarnos al Cielo. El Agape es la conclusión perfecta de la historia de amor, donde dos vidas se han fundido de tal manera que ya no son dos, sino una sola carne y un solo espíritu, listos para entrar juntos en la eternidad del Señor." }
+            ];
+            let html = "";
+            etapas.forEach(e => {
+                html += `<div class="card etapa-item"><div class="etapa-titulo">${e.t}</div><div class="etapa-texto">${e.d}</div></div>`;
+            });
+            document.getElementById('etapas-container').innerHTML = html;
         }
     </script>
 </body>

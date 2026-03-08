@@ -7,138 +7,83 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; min-height: 100%; font-family: 'Montserrat', sans-serif; }
-
-        body.tormenta-mood {
-            background: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        body.calma-mood {
-            background: #fdfbf7;
-            color: #2c3e50;
-            overflow-y: auto; /* Permite scroll para leer todo el contenido */
-        }
-
-        .container {
-            width: 100%; max-width: 600px;
-            padding: 40px 20px;
-            text-align: center;
-            transition: all 1.5s ease;
-        }
-
-        /* --- ESTILO TORMENTA --- */
-        textarea {
-            width: 100%; height: 180px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #f1c40f;
-            border-radius: 20px;
-            color: white; padding: 20px;
-            font-size: 1.1rem; margin: 25px 0;
-            outline: none; backdrop-filter: blur(5px);
-        }
-
-        .btn-principal {
-            background: #f1c40f; color: #1a252f;
-            border: none; padding: 18px 50px;
-            border-radius: 50px; font-weight: 700;
-            cursor: pointer; box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
-        }
-
-        /* --- ESTILO CALMA (BÍBLICO) --- */
-        .seccion-biblica {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: 30px;
-            text-align: left;
-        }
-
-        .capitulo-verso {
-            font-family: 'Playfair Display', serif;
-            color: #d4af37;
-            font-size: 1.5rem;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-        }
-
-        h2 { font-family: 'Playfair Display', serif; color: #5d4037; }
-        
-        .bloque-texto { margin-bottom: 25px; line-height: 1.7; font-size: 1rem; }
-        .etiqueta { font-weight: 700; color: #a67c00; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 5px; }
-
-        .hidden { display: none; opacity: 0; }
+        body, html { margin: 0; padding: 0; min-height: 100%; font-family: 'Montserrat', sans-serif; transition: background 1s; }
+        body.tormenta-mood { background: linear-gradient(180deg, #0f0c29, #302b63, #24243e); color: white; display: flex; align-items: center; justify-content: center; }
+        body.calma-mood { background: #fdfbf7; color: #2c3e50; overflow-y: auto; }
+        .container { width: 100%; max-width: 600px; padding: 40px 20px; text-align: center; margin: auto; }
+        textarea { width: 100%; height: 180px; background: rgba(255,255,255,0.1); border: 2px solid #f1c40f; border-radius: 20px; color: white; padding: 20px; font-size: 1.1rem; margin: 25px 0; outline: none; }
+        .btn-principal { background: #f1c40f; color: #1a252f; border: none; padding: 18px 50px; border-radius: 50px; font-weight: 700; cursor: pointer; }
+        .seccion-biblica { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 30px; text-align: left; animation: slideUp 1s ease; }
+        .capitulo-verso { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 1.5rem; border-bottom: 1px solid #eee; margin-bottom: 15px; }
+        .etiqueta { font-weight: 700; color: #a67c00; text-transform: uppercase; font-size: 0.8rem; display: block; margin-top: 15px; }
+        .hidden { display: none !important; }
         #flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; z-index: 999; }
-        
         @keyframes flash-anim { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
-        .vibras-sello { margin: 50px 0; font-size: 0.7rem; letter-spacing: 5px; color: #bbb; text-align: center; width: 100%; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .vibras-sello { margin: 40px 0; font-size: 0.7rem; letter-spacing: 5px; color: #bbb; text-align: center; }
     </style>
 </head>
 <body class="tormenta-mood">
-
     <div id="flash"></div>
 
     <div class="container" id="box-tormenta">
         <div style="font-size: 60px;">⚡</div>
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 2.2rem;">Después de la Tormenta...</h1>
-        <p style="opacity: 0.8;">Escribe lo que hoy pesa en tu relación para entregárselo al Señor.</p>
-        <textarea id="texto-usuario" placeholder="Mi molestia es..."></textarea>
-        <button class="btn-principal" onclick="irALaPaz()">BUSCAR LA CALMA</button>
+        <h1 style="font-family: 'Playfair Display', serif;">Soltar para Sanar</h1>
+        <textarea id="texto-usuario" placeholder="¿Qué tormenta hay en tu corazón hoy?"></textarea>
+        <button class="btn-principal" onclick="generarCalma()">BUSCAR LA CALMA</button>
     </div>
 
     <div class="container hidden" id="box-calma">
-        <div style="font-size: 80px; margin-bottom: 10px;">☀️</div>
+        <div style="font-size: 70px;">☀️</div>
         <h1 style="font-family: 'Playfair Display', serif;">Llega la Calma</h1>
-        
-        <div class="seccion-biblica">
-            <div class="capitulo-verso">Marcos 4:39</div>
-            <div class="bloque-texto" style="font-style: italic; font-size: 1.2rem; color: #555;">
-                "Y levantándose, reprendió al viento, y dijo al mar: Callas, enmudece. Y cesó el viento, y se hizo grande bonanza."
-            </div>
-
-            <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 20px 0;">
-
-            <div class="bloque-texto">
-                <span class="etiqueta">Contexto Histórico</span>
-                Los discípulos estaban en el Mar de Galilea, un lugar conocido por tormentas repentinas y violentas debido a su geografía bajo el nivel del mar. Muchos eran pescadores expertos, pero esta tormenta los sobrepasó. Jesús dormía en la popa, demostrando una paz que ellos no entendían. Al despertar, no usó ritos; usó su **autoridad** sobre la creación.
-            </div>
-
-            <div class="bloque-texto">
-                <span class="etiqueta">Aplicación a la Pareja</span>
-                A veces, en la relación, las "olas" de los problemas (dinero, comunicación, carácter) parecen hundir nuestra barca. Invitamos a Jesús a la relación, pero nos desesperamos si no actúa en nuestro tiempo. **La Calma** no llega porque el problema desaparezca, sino porque reconocemos Quién está en nuestra barca. Callar la lengua y enmudecer el orgullo es el primer paso para la bonanza.
-            </div>
-        </div>
-
-        <button onclick="location.reload()" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 12px 25px; border-radius: 30px; cursor: pointer; margin-top: 30px; font-weight: bold;">
-            NUEVO AMANECER
-        </button>
-
+        <div id="contenido-dinamico"></div>
+        <button onclick="location.reload()" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 12px 25px; border-radius: 30px; cursor: pointer; margin-top: 30px;">OTRA REFLEXIÓN</button>
         <div class="vibras-sello">✨ VIBRAS POSITIVAS ✨</div>
     </div>
 
     <script>
-        function irALaPaz() {
-            const txt = document.getElementById('texto-usuario').value;
-            if(txt.trim() === "") return alert("Socia, escribe tu carga antes de entregarla.");
+        const lecciones = [
+            {
+                cita: "Marcos 4:39",
+                texto: '"Y levantándose, reprendió al viento, y dijo al mar: Callas, enmudece. Y cesó el viento, y se hizo grande bonanza."',
+                contexto: "Los discípulos estaban en el Mar de Galilea, propenso a tormentas súbitas. A pesar de ser expertos navegantes, el miedo los cegó. Jesús demostró autoridad absoluta sobre la creación con solo Su palabra.",
+                aplicacion: "En la pareja, las tormentas no se calman gritando más fuerte que el viento, sino permitiendo que la autoridad de Cristo gobierne nuestras emociones. Callar el orgullo es dejar que Él hable."
+            },
+            {
+                cita: "Efesios 4:26",
+                texto: '"Airaos, pero no pequéis; no se ponga el sol sobre vuestro enojo."',
+                contexto: "Pablo escribía a una iglesia diversa con conflictos internos. En el mundo antiguo, dejar pasar el tiempo sin resolver deudas o pleitos destruía comunidades enteras.",
+                aplicacion: "Sentir enojo es humano, pero retenerlo es tóxico. Esta app es tu recordatorio de que la tormenta debe morir antes de que termine el día para que el mañana nazca limpio."
+            },
+            {
+                cita: "Eclesiastés 4:12",
+                texto: '"Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto."',
+                contexto: "Salomón reflexiona sobre la vanidad de la vida en solitario. Un cordón de tres hilos era una técnica de tejido militar y comercial para asegurar que la carga no se cayera.",
+                aplicacion: "Ustedes son dos hilos, pero el tercer hilo es Dios. Si intentan calmar la tormenta solos, el cordón se tensa; si dejan que Dios sea el centro, la unión se vuelve irrompible."
+            }
+        ];
 
-            // Efecto Flash
+        function generarCalma() {
+            if(document.getElementById('texto-usuario').value.trim() === "") return alert("Socia, escribe algo primero.");
+            
             document.getElementById('flash').style.animation = "flash-anim 0.6s ease-out";
 
             setTimeout(() => {
-                // Cambio de Interface
-                document.body.classList.remove('tormenta-mood');
-                document.body.classList.add('calma-mood');
+                const azar = lecciones[Math.floor(Math.random() * lecciones.length)];
+                const html = `
+                    <div class="seccion-biblica">
+                        <div class="capitulo-verso">${azar.cita}</div>
+                        <p style="font-style:italic; font-size:1.1rem;">${azar.texto}</p>
+                        <span class="etiqueta">Contexto Histórico</span>
+                        <p>${azar.contexto}</p>
+                        <span class="etiqueta">Aplicación a la Realidad</span>
+                        <p>${azar.aplicacion}</p>
+                    </div>`;
+                
+                document.getElementById('contenido-dinamico').innerHTML = html;
+                document.body.className = "calma-mood";
                 document.getElementById('box-tormenta').classList.add('hidden');
-                
-                const boxCalma = document.getElementById('box-calma');
-                boxCalma.classList.remove('hidden');
-                boxCalma.style.opacity = "1";
-                
-                // Limpieza
-                document.getElementById('texto-usuario').value = "";
+                document.getElementById('box-calma').classList.remove('hidden');
                 window.scrollTo(0,0);
             }, 500);
         }

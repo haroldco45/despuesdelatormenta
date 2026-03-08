@@ -38,8 +38,8 @@
             right: 30px;
             background: var(--oro);
             color: white;
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -86,7 +86,7 @@
         <img src="pst.PNG" alt="Logo Parroquia" class="logo-pst">
         <div class="header-parroquia">
             <h2>PARROQUIA DE LA SANTÍSIMA TRINIDAD</h2>
-            <p>Contacto Caucasia, Antioquia</p>
+            <p>CAUCASIA, ANTIOQUIA</p>
         </div>
 
         <div id="reloj-colombia">Cargando hora de Colombia...</div>
@@ -110,6 +110,7 @@
         <div id="step-calma" class="hidden">
             <div class="nube">☁️</div>
             <h1>Nube de Esperanza</h1>
+            
             <div id="biblia-dinamica"></div>
 
             <hr style="margin: 50px 0; border: 0; border-top: 2px dashed var(--oro);">
@@ -165,8 +166,8 @@
             document.getElementById('biblia-dinamica').innerHTML = `
                 <div class="card">
                     <h2 style="color: var(--oro); border-bottom: 1px solid #eee;">${random.v}</h2>
-                    <p style="font-size: 1.2rem;"><i>"${random.t}"</i></p>
-                    <p><strong>Adaptación:</strong> ${random.a}</p>
+                    <p style="font-size: 1.2rem; text-align:center;"><i>"${random.t}"</i></p>
+                    <p><strong>Reflexión:</strong> ${random.a}</p>
                 </div>`;
 
             mostrarEtapas();
@@ -179,7 +180,7 @@
             { t: "3. Establecimiento de Roles y Poder", d: "En esta fase, la pareja lucha por definir quién tiene la autoridad en diferentes áreas o cómo se distribuirán las responsabilidades del hogar, las finanzas y la crianza. Es un periodo de 'ajuste de cuentas' donde pueden surgir conflictos por el control. La enseñanza de la Iglesia nos invita a ver esta etapa no como una lucha de poder, sino como una oportunidad para el servicio mutuo. No se trata de quién manda, sino de cómo ambos pueden servir mejor al bienestar de la familia. El éxito aquí depende de la capacidad de comunicación asertiva y de la humildad para reconocer que la unión matrimonial funciona mejor cuando se opera como un solo cuerpo, donde cada miembro aporta sus dones para el beneficio del conjunto, sin egoísmos." },
             { t: "4. Estabilidad y Rutina", d: "Tras superar las luchas iniciales de roles, el matrimonio suele entrar en una meseta de tranquilidad que, paradójicamente, conlleva el riesgo de la monotonía. La vida se vuelve predecible y la atención se desplaza hacia los hijos, el trabajo o los compromisos sociales, descuidando a veces la relación de pareja. En esta etapa, es vital recordar que el amor es un fuego que requiere leña constante para no extinguirse. La estabilidad debe ser un refugio seguro, pero no como una zona de confort que justifique el descuido. Es el momento de reinventar los detalles, de cultivar intereses comunes y de asegurar que el cónyuge siga siendo la prioridad absoluta, protegiendo el espacio sagrado de la pareja." },
             { t: "5. Profundización y Amistad (Philia)", d: "Aquí el amor trasciende la pasión y la simple convivencia para convertirse en una amistad profunda y sólida. Es la etapa de la complicidad, donde los esposos se conocen tanto que las palabras a veces sobran. Se han compartido alegrías inmensas y dolores profundos, lo que ha forjado un vínculo de lealtad inquebrantable. La 'Philia' representa ese amor de amigos que se eligen una y otra vez cada mañana. Desde la fe, este es el cumplimiento del compañerismo que Dios deseó para el hombre y la mujer. En esta fase, el matrimonio se convierte en un puerto seguro donde ambos encuentran descanso y comprensión, habiendo aprendido ya que la felicidad del otro es tan importante como la propia." },
-            { t: "6. Compromiso Renovado", d: "Llega un momento en que la pareja reflexiona sobre lo vivido y lo que falta por vivir. Pueden surgir dudas o el deseo de recuperar una juventud perdida, lo que a veces genera nuevas tensiones. Sin embargo, para un matrimonio cimentado en la roca de la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con una conciencia mucho más clara de lo que implica la fidelidad. Es un periodo de gran fecundidad espiritual, donde la pareja, ya más sabia, puede servir de guía a otros matrimonios jóvenes, demostrando con su testimonio que el amor sí puede prevalecer sobre el tiempo si se mantiene la mirada puesta en Dios." },
+            { t: "6. Compromiso Renovado", d: "Llega un momento en que la pareja reflexiona sobre lo vivido y lo que falta por vivir. Pueden surgir dudas o el deseo de recuperar una juventud perdida, lo que a veces genera nuevas tensiones. Sin embargo, para un matrimonio cimentado en la roca de la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con una conciencia mucho más clara de lo que implica la fidelidad. Es un periodo de gran fecundidad espiritual, donde la pareja, ya más sabia, puede servir de guía a otros matrimonios jóvenes, demostrando con su testimonio que el amor sí puede prevalecer sobre el tiempo y las pruebas si se mantiene la mirada puesta en Dios." },
             { t: "7. Amor Incondicional (Agape)", d: "Esta es la cima del matrimonio, el reflejo más puro del amor de Dios por la humanidad. El amor Agape es aquel que se entrega totalmente sin esperar nada a cambio; es un amor sacrificial, generoso y lleno de gracia. En esta etapa, los esposos viven el uno para el otro con una ternura que ha sido purificada por los años. Ya no se busca la satisfacción personal, sino la santidad y el bienestar del compañero. Es un estado de paz profunda donde se comprende que el matrimonio fue el camino diseñado por Dios para llevarnos al Cielo. El Agape es la conclusión perfecta de la historia de amor, donde dos vidas se han fundido de tal manera que ya no son dos, sino una sola carne y un solo espíritu." }
         ];
 
@@ -197,7 +198,7 @@
                 hablando = false;
                 actualizarBoton(false);
             } else {
-                let texto = "Llega la calma. " + document.getElementById('biblia-dinamica').innerText + ". ";
+                let texto = "Llega la calma. Reflexión bíblica. " + document.getElementById('biblia-dinamica').innerText + ". ";
                 texto += "Las siete etapas del amor maduro. ";
                 etapasData.forEach(e => { texto += e.t + ". " + e.d + ". "; });
                 texto += "Cátedra del buen comportamiento. " + document.getElementById('texto-catedra').innerText;
@@ -207,16 +208,17 @@
                 // Forzar idioma y buscar voz latina
                 utterance.lang = 'es-MX'; 
                 let voces = synth.getVoices();
-                let latina = voces.find(v => v.lang.includes('es-MX') || v.lang.includes('es-US') || v.lang.includes('es-CO'));
+                let latina = voces.find(v => (v.lang.includes('es-MX') || v.lang.includes('es-US') || v.lang.includes('es-CO')) && v.name.includes('Google'));
+                if(!latina) latina = voces.find(v => v.lang.includes('es'));
+                
                 if(latina) utterance.voice = latina;
                 
                 utterance.rate = 0.9;
+                utterance.onstart = () => { hablando = true; actualizarBoton(true); };
                 utterance.onend = () => { hablando = false; actualizarBoton(false); };
                 
                 synth.cancel();
-                setTimeout(() => { synth.speak(utterance); }, 100);
-                hablando = true;
-                actualizarBoton(true);
+                setTimeout(() => { synth.speak(utterance); }, 150);
             }
         }
 
@@ -227,7 +229,11 @@
         }
 
         function reiniciarApp() { synth.cancel(); location.reload(); }
-        window.speechSynthesis.onvoiceschanged = () => { synth.getVoices(); };
+        
+        // Precarga de voces para que la selección latina funcione mejor
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => synth.getVoices();
+        }
     </script>
 </body>
 </html>

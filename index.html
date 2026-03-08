@@ -31,6 +31,35 @@
         /* RELOJ COLOMBIA */
         #reloj-colombia { font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8; font-weight: bold; }
 
+        /* BOTÓN DE VOZ */
+        .btn-voz {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--oro);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-voz:hover { transform: scale(1.1); }
+        .btn-voz.leyendo { background: #e74c3c; animation: pulse 1.5s infinite; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
         /* ESTILOS DE COMPONENTES */
         .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 25px 0; text-align: left; color: var(--texto-dark); animation: fadeIn 1s ease; line-height: 1.8; }
         textarea { width: 100%; height: 140px; border-radius: 15px; padding: 15px; margin: 15px 0; border: 2px solid var(--oro); font-size: 1rem; outline: none; background: rgba(255,255,255,0.9); }
@@ -50,6 +79,8 @@
     </style>
 </head>
 <body class="mood-tormenta">
+
+    <button id="btn-audio" class="btn-voz hidden" onclick="toggleLectura()" title="Escuchar reflexión">🎤</button>
 
     <div class="container">
         <img src="pst.PNG" alt="Logo Parroquia" class="logo-pst">
@@ -85,17 +116,11 @@
             <hr style="margin: 50px 0; border: 0; border-top: 2px dashed var(--oro);">
 
             <h1 style="font-size: 2.5rem;">Las 7 Etapas del Amor Maduro</h1>
-            <p style="margin-bottom: 40px; font-style: italic;">Un camino de crecimiento espiritual y humano para la pareja.</p>
             <div id="etapas-container"></div>
 
-            <div class="card" style="background: #fff9e6; border: 1px solid #f9e2af;">
+            <div id="catedra-final" class="card" style="background: #fff9e6; border: 1px solid #f9e2af;">
                 <h2 style="text-align: center; color: #856404;">Cátedra del Buen Comportamiento</h2>
-                <p>Para restaurar la llama que los unió en el noviazgo, es imperativo implementar la <strong>"Pedagogía del Amor"</strong>. Esto implica volver a las bases: el saludo cálido, el agradecimiento por las pequeñas cosas y el perdón rápido. Recuerden que la cortesía no es solo para los extraños; es, sobre todo, para el cónyuge. Un matrimonio saludable no es aquel que no tiene problemas, sino aquel que sabe comportarse con caridad y ternura en medio de las dificultades, manteniendo siempre la dignidad y el respeto por el sacramento que un día juraron ante el altar de Dios.</p>
-                <ul style="text-align: left; line-height: 2;">
-                    <li><strong>El Detalle:</strong> La sorpresa diaria mantiene vivo el asombro del encuentro inicial.</li>
-                    <li><strong>La Mirada:</strong> Conectar visualmente es reconocer el alma del otro.</li>
-                    <li><strong>La Oración:</strong> Una pareja que se arrodilla ante Dios, siempre se mantiene en pie ante la vida.</li>
-                </ul>
+                <p id="texto-catedra">Para restaurar la llama que los unió en el noviazgo, es imperativo implementar la Pedagogía del Amor. Esto implica volver a las bases: el saludo cálido, el agradecimiento por las pequeñas cosas y el perdón rápido. Recuerden que la cortesía no es solo para los extraños; es, sobre todo, para el cónyuge. Un matrimonio saludable no es aquel que no tiene problemas, sino aquel que sabe comportarse con caridad y ternura en medio de las dificultades, manteniendo siempre la dignidad y el respeto por el sacramento que un día juraron ante el altar de Dios.</p>
             </div>
 
             <div class="creditos">
@@ -104,11 +129,14 @@
                 <p>Bajo la supervisión espiritual del: <strong>Padre Joan Daza</strong></p>
             </div>
             
-            <button onclick="location.reload()" style="background: #333; margin-bottom: 60px;">Iniciar Nuevo Proceso</button>
+            <button onclick="reiniciarApp()" style="background: #333; margin-bottom: 60px;">Iniciar Nuevo Proceso</button>
         </div>
     </div>
 
     <script>
+        let synth = window.speechSynthesis;
+        let hablando = false;
+
         function actualizarReloj() {
             const opciones = { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, day: '2-digit', month: 'long', year: 'numeric' };
             const ahora = new Date().toLocaleString('es-CO', opciones);
@@ -118,8 +146,8 @@
         actualizarReloj();
 
         const baseBiblica = [
-            { v: "Marcos 4:39", t: '"Callas, enmudece. Y cesó el viento, y se hizo grande bonanza."', c: "Los discípulos, aun con Jesús en la barca, sintieron miedo. Él demostró que Su autoridad está por encima de cualquier crisis.", a: "Si sienten que su barca se hunde, invoquen a Cristo. Él tiene el poder de restaurar la paz en su hogar." },
-            { v: "1 Corintios 13:4-5", t: '"El amor es sufrido, es benigno; el amor no tiene envidia... no se irrita, no guarda rencor."', c: "San Pablo enseña que el amor no es una emoción, sino una virtud que se practica con paciencia.", a: "Cuando la irritación aparezca, miren la cruz. El amor maduro decide volver a empezar sin reproches." }
+            { v: "Marcos 4:39", t: "Callas, enmudece. Y cesó el viento, y se hizo grande bonanza.", c: "Los discípulos, aun con Jesús en la barca, sintieron miedo. Él demostró que Su autoridad está por encima de cualquier crisis.", a: "Si sienten que su barca se hunde, invoquen a Cristo. Él tiene el poder de restaurar la paz en su hogar." },
+            { v: "1 Corintios 13:4-5", t: "El amor es sufrido, es benigno; el amor no tiene envidia; no se irrita, no guarda rencor.", c: "San Pablo enseña que el amor no es una emoción, sino una virtud que se practica con paciencia.", a: "Cuando la irritación aparezca, miren la cruz. El amor maduro decide volver a empezar sin reproches." }
         ];
 
         function irAEsposo() {
@@ -133,12 +161,13 @@
             document.body.className = "mood-calma";
             document.getElementById('step-esposo').classList.add('hidden');
             document.getElementById('step-calma').classList.remove('hidden');
+            document.getElementById('btn-audio').classList.remove('hidden');
             
             const random = baseBiblica[Math.floor(Math.random() * baseBiblica.length)];
             document.getElementById('biblia-dinamica').innerHTML = `
-                <div class="card">
+                <div id="texto-biblico" class="card">
                     <h2 style="color: var(--oro); border-bottom: 1px solid #eee;">${random.v} - Reflexión de Fe</h2>
-                    <p style="font-size: 1.2rem; text-align:center;"><i>${random.t}</i></p>
+                    <p style="font-size: 1.2rem; text-align:center;"><i>"${random.t}"</i></p>
                     <p><strong>Contexto:</strong> ${random.c}</p>
                     <p><strong>Adaptación:</strong> ${random.a}</p>
                 </div>`;
@@ -147,21 +176,56 @@
             window.scrollTo(0,0);
         }
 
+        const etapasData = [
+            { t: "1. Transición y Enamoramiento (Eros)", d: "Esta es la etapa del deslumbramiento inicial, donde la atracción física y química domina el encuentro. Es un periodo de idealización profunda en el que los defectos del otro parecen inexistentes. Sin embargo, el Eros no debe ser solo pasión ciega, sino el punto de partida para descubrir la belleza de la creación de Dios en el cónyuge. El desafío es entender que este fuego es transitorio y su propósito es permitir a la pareja acercarse para construir un proyecto de vida sólido." },
+            { t: "2. Realidad y Desilusión", d: "A medida que la convivencia avanza, la venda de la idealización cae. Aquí es donde los hábitos molestos y las debilidades personales se hacen evidentes. Muchos matrimonios entran en crisis porque confunden el fin del enamoramiento con el fin del amor. No obstante, esta etapa es crucial para el crecimiento, pues es el momento en que se deja de amar a una imagen perfecta para empezar a amar a una persona real en un taller de santificación mutua." },
+            { t: "3. Establecimiento de Roles y Poder", d: "En esta fase, la pareja lucha por definir quién tiene la autoridad o cómo se distribuirán las responsabilidades. Es un periodo de ajuste donde pueden surgir conflictos por el control. La Iglesia nos invita a ver esta etapa como una oportunidad para el servicio mutuo. No se trata de quién manda, sino de cómo ambos pueden servir mejor al bienestar de la familia, operando como un solo cuerpo con humildad." },
+            { t: "4. Estabilidad y Rutina", d: "Tras superar las luchas iniciales, el matrimonio suele entrar en una meseta de tranquilidad que conlleva el riesgo de la monotonía. La vida se vuelve predecible y la atención se desplaza hacia los hijos o el trabajo. En esta etapa, es vital recordar que el amor requiere leña constante. La estabilidad debe ser un refugio seguro, no una zona de confort. Es el momento de reinventar los detalles y asegurar que el cónyuge siga siendo la prioridad absoluta." },
+            { t: "5. Profundización y Amistad (Philia)", d: "Aquí el amor trasciende la pasión para convertirse en una amistad profunda. Es la etapa de la complicidad, donde los esposos se conocen tanto que las palabras a veces sobran. Se han compartido alegrías y dolores forjando un vínculo de lealtad. La Philia representa ese amor de amigos que se eligen cada mañana. El matrimonio se convierte en un puerto seguro donde ambos encuentran descanso, habiendo aprendido que la felicidad del otro es tan importante como la propia." },
+            { t: "6. Compromiso Renovado", d: "Llega un momento en que la pareja reflexiona sobre lo vivido. Para un matrimonio en la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con conciencia de lo que implica la fidelidad. Es un periodo de fecundidad espiritual donde la pareja, ya más sabia, puede servir de guía a otros demostrando que el amor prevalece si se mantiene la mirada puesta en Dios." },
+            { t: "7. Amor Incondicional (Agape)", d: "Esta es la cima del matrimonio, el reflejo más puro del amor de Dios. El amor Agape es aquel que se entrega totalmente sin esperar nada a cambio; es un amor sacrificial y lleno de gracia. Los esposos viven el uno para el otro con una ternura purificada. Ya no se busca la satisfacción personal, sino la santidad del compañero. Es un estado de paz profunda donde se comprende que el matrimonio es el camino diseñado por Dios para llevarnos al Cielo." }
+        ];
+
         function mostrarEtapas() {
-            const etapas = [
-                { t: "1. Transición y Enamoramiento (Eros)", d: "Esta es la etapa del deslumbramiento inicial, donde la atracción física y química domina el encuentro. Es un periodo de idealización profunda en el que los defectos del otro parecen inexistentes o incluso encantadores. Sin embargo, desde una perspectiva cristiana, el Eros no debe ser solo pasión ciega, sino el punto de partida para descubrir la belleza de la creación de Dios en el cónyuge. El desafío fundamental en este primer ciclo es entender que este fuego es transitorio por naturaleza y que su propósito divino es servir como el 'pegamento' inicial que permite a la pareja acercarse lo suficiente para comenzar a construir un proyecto de vida sólido sobre cimientos mucho más profundos que la simple apariencia o el deseo carnal." },
-                { t: "2. Realidad y Desilusión", d: "A medida que la convivencia avanza, la venda de la idealización cae y emerge la realidad humana con toda su complejidad. Aquí es donde los hábitos molestos, las diferencias de criterio y las debilidades personales se hacen evidentes. Muchos matrimonios entran en crisis en este punto porque confunden el fin del enamoramiento con el fin del amor. No obstante, esta etapa es crucial para el crecimiento, pues es el momento en que se deja de amar a una imagen perfecta para empezar a amar a una persona real. Es un llamado a la madurez espiritual donde la pareja debe aprender a negociar, a ceder y a comprender que el matrimonio es un taller de santificación mutua." },
-                { t: "3. Establecimiento de Roles y Poder", d: "En esta fase, la pareja lucha por definir quién tiene la autoridad en diferentes áreas o cómo se distribuirán las responsabilidades del hogar. Es un periodo de ajuste donde pueden surgir conflictos por el control. La enseñanza de la Iglesia nos invita a ver esta etapa no como una lucha de poder, sino como una oportunidad para el servicio mutuo. No se trata de quién manda, sino de cómo ambos pueden servir mejor al bienestar de la familia. El éxito depende de la capacidad de comunicación asertiva y de la humildad para reconocer que la unión matrimonial funciona mejor cuando se opera como un solo cuerpo, donde cada miembro aporta sus dones para el beneficio del conjunto." },
-                { t: "4. Estabilidad y Rutina", d: "Tras superar las luchas iniciales de roles, el matrimonio suele entrar en una meseta de tranquilidad que conlleva el riesgo de la monotonía. La vida se vuelve predecible y la atención se desplaza hacia los hijos o el trabajo, descuidando a veces la relación. En esta etapa, es vital recordar que el amor es un fuego que requiere leña constante. La estabilidad debe ser un refugio seguro, no una zona de confort que justifique el descuido. Es el momento de reinventar los detalles, de cultivar intereses comunes y de asegurar que el cónyuge siga siendo la prioridad absoluta, protegiendo el espacio sagrado de la pareja frente a las distracciones externas." },
-                { t: "5. Profundización y Amistad (Philia)", d: "Aquí el amor trasciende la pasión para convertirse en una amistad profunda y sólida. Es la etapa de la complicidad, donde los esposos se conocen tanto que las palabras a veces sobran. Se han compartido alegrías y dolores, lo que ha forjado un vínculo de lealtad inquebrantable. La 'Philia' representa ese amor de amigos que se eligen una y otra vez cada mañana. Desde la fe, este es el cumplimiento del compañerismo que Dios deseó para el hombre y la mujer. En esta fase, el matrimonio se convierte en un puerto seguro donde ambos encuentran descanso y comprensión, habiendo aprendido que la felicidad del otro es tan importante como la propia." },
-                { t: "6. Compromiso Renovado", d: "Llega un momento en que la pareja reflexiona sobre lo vivido y lo que falta por vivir. Para un matrimonio cimentado en la roca de la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con una conciencia mucho más clara de lo que implica la fidelidad. Es un periodo de gran fecundidad espiritual, donde la pareja, ya más sabia, puede servir de guía a otros matrimonios jóvenes, demostrando con su testimonio que el amor sí puede prevalecer sobre el tiempo y las pruebas si se mantiene la mirada puesta en Dios y en el sacramento." },
-                { t: "7. Amor Incondicional (Agape)", d: "Esta es la cima del matrimonio, el reflejo más puro del amor de Dios por la humanidad. El amor Agape es aquel que se entrega totalmente sin esperar nada a cambio; es un amor sacrificial, generoso y lleno de gracia. En esta etapa, los esposos viven el uno para el otro con una ternura purificada por los años. Ya no se busca la satisfacción personal, sino la santidad del compañero. Es un estado de paz profunda donde se comprende que el matrimonio fue el camino diseñado por Dios para llevarnos al Cielo. El Agape es la conclusión perfecta de la historia de amor, donde dos vidas se han fundido de tal manera que ya no son dos, sino una sola carne y un solo espíritu ante el Señor." }
-            ];
             let html = "";
-            etapas.forEach(e => {
+            etapasData.forEach(e => {
                 html += `<div class="card etapa-item"><div class="etapa-titulo">${e.t}</div><div class="etapa-texto">${e.d}</div></div>`;
             });
             document.getElementById('etapas-container').innerHTML = html;
+        }
+
+        function toggleLectura() {
+            if (hablando) {
+                synth.cancel();
+                hablando = false;
+                document.getElementById('btn-audio').classList.remove('leyendo');
+                document.getElementById('btn-audio').innerHTML = "🎤";
+            } else {
+                let textoParaLeer = "Llega la calma. " + document.getElementById('biblia-dinamica').innerText + ". ";
+                textoParaLeer += "Las siete etapas del amor maduro. ";
+                etapasData.forEach(e => { textoParaLeer += e.t + ". " + e.d + ". "; });
+                textoParaLeer += "Cátedra del buen comportamiento. " + document.getElementById('texto-catedra').innerText;
+
+                let utterance = new SpeechSynthesisUtterance(textoParaLeer);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                
+                utterance.onend = () => {
+                    hablando = false;
+                    document.getElementById('btn-audio').classList.remove('leyendo');
+                    document.getElementById('btn-audio').innerHTML = "🎤";
+                };
+
+                synth.speak(utterance);
+                hablando = true;
+                document.getElementById('btn-audio').classList.add('leyendo');
+                document.getElementById('btn-audio').innerHTML = "🛑";
+            }
+        }
+
+        function reiniciarApp() {
+            synth.cancel();
+            location.reload();
         }
     </script>
 </body>

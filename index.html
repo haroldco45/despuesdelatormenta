@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Después de la Tormenta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            text-align: center;
-            transition: 2s;
+        * { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+
+        /* FONDO DINÁMICO */
+        body.tormenta-mood {
+            background: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+            color: white;
         }
-        /* ESTADO TORMENTA */
-        .tormenta { background: #1a252f; color: white; }
-        /* ESTADO CALMA */
-        .calma { background: #fcfaf2; color: #4a4a4a; }
+        body.calma-mood {
+            background: linear-gradient(180deg, #f7f1e3, #ffffff);
+            color: #2c3e50;
+        }
 
         .container {
             display: flex;
@@ -24,68 +26,123 @@
             justify-content: center;
             height: 100vh;
             padding: 20px;
+            transition: all 2s ease;
         }
 
+        /* EFECTO RAYO */
+        #flash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .rayo-animado { font-size: 80px; filter: drop-shadow(0 0 20px #f1c40f); cursor: pointer; }
+
         textarea {
-            width: 100%;
-            max-width: 400px;
-            height: 150px;
+            width: 100%; max-width: 450px; height: 180px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(241, 196, 15, 0.5);
+            border-radius: 20px;
+            color: white;
+            padding: 20px;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
             margin: 20px 0;
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 16px;
+            outline: none;
+            transition: 0.5s;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 50px;
+            background: #f1c40f;
+            color: #1a252f;
             border: none;
-            background: #fbc02d;
-            color: black;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.3);
+            transition: 0.3s;
         }
 
-        .hidden { display: none; }
-        .vibras { margin-top: 30px; font-weight: bold; color: #bcaaa4; }
+        button:hover { transform: scale(1.05); background: #f39c12; }
+
+        /* ESTILO CALMA */
+        .oracion {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            max-width: 600px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .hidden { display: none !important; opacity: 0; }
+
+        .vibras-sello {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+
+        @keyframes flash-anim {
+            0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; }
+        }
     </style>
 </head>
-<body id="cuerpo" class="tormenta">
+<body class="tormenta-mood">
 
-    <div class="container" id="pantalla-tormenta">
-        <div style="font-size: 60px;">⚡</div>
-        <h1>La Tormenta</h1>
-        <p>Escribe lo que quieres soltar:</p>
-        <textarea id="texto-tormenta" placeholder="Escribe aquí..."></textarea>
-        <br>
-        <button onclick="cambiarACalma()">SOLTAR A LA TORMENTA</button>
+    <div id="flash"></div>
+
+    <div class="container" id="box-tormenta">
+        <div class="rayo-animado" id="main-bolt">⚡</div>
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Soltar para Sanar</h1>
+        <p style="opacity: 0.7;">Escribe lo que pesa en tu corazón y deja que el rayo lo destruya.</p>
+        <textarea id="texto" placeholder="Escribe aquí..."></textarea>
+        <button onclick="procesar()">DEJAR IR</button>
     </div>
 
-    <div class="container hidden" id="pantalla-calma">
-        <div style="font-size: 80px;">☀️</div>
-        <h1>Llegó la Calma</h1>
-        <p style="font-style: italic; font-size: 20px; max-width: 500px;">
-            "Señor, entregamos esta tormenta. Que tu paz guarde nuestro corazón y nuestra unión. Amén."
-        </p>
-        <button onclick="location.reload()" style="background: #eee;">Reiniciar</button>
-        <div class="vibras">✨ VIBRAS POSITIVAS ✨</div>
+    <div class="container hidden" id="box-calma">
+        <div style="font-size: 100px;">☀️</div>
+        <h1 style="font-family: 'Playfair Display', serif;">La Paz de Dios</h1>
+        <div class="oracion">
+            "Señor, después de la tormenta elegimos tu calma. Limpia nuestro pasado, bendice nuestro presente y guía nuestro futuro en amor."
+        </div>
+        <p style="margin-top: 20px; font-weight: 300;">Respiren profundo juntos.</p>
+        <button onclick="location.reload()" style="background: transparent; border: 1px solid #ccc; color: #777; margin-top: 20px;">Nuevo Comienzo</button>
+        <div class="vibras-sello">✨ VIBRAS POSITIVAS ✨</div>
     </div>
 
     <script>
-        function cambiarACalma() {
-            // 1. Ocultar la tormenta
-            document.getElementById('pantalla-tormenta').style.display = 'none';
-            
-            // 2. Cambiar el color del fondo
-            document.getElementById('cuerpo').classList.remove('tormenta');
-            document.getElementById('cuerpo').classList.add('calma');
-            
-            // 3. Mostrar la calma
-            document.getElementById('pantalla-calma').classList.remove('hidden');
-            
-            // 4. Borrar lo escrito (Privacidad)
-            document.getElementById('texto-tormenta').value = "";
+        function procesar() {
+            const txt = document.getElementById('texto').value;
+            if(txt.length < 2) return alert("Socia, escribe algo para soltar.");
+
+            // 1. Efecto de Flash (Rayo)
+            const flash = document.getElementById('flash');
+            flash.style.animation = "flash-anim 0.5s ease-out";
+
+            // 2. Transición de salida
+            document.getElementById('box-tormenta').style.opacity = '0';
+            document.getElementById('box-tormenta').style.transform = 'scale(0.9)';
+
+            setTimeout(() => {
+                // Cambiar estado visual del body
+                document.body.className = "calma-mood";
+                
+                // Ocultar y Mostrar
+                document.getElementById('box-tormenta').classList.add('hidden');
+                const boxCalma = document.getElementById('box-calma');
+                boxCalma.classList.remove('hidden');
+                
+                // Borrar texto
+                document.getElementById('texto').value = "";
+            }, 600);
         }
     </script>
 </body>

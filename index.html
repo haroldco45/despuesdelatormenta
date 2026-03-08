@@ -22,13 +22,16 @@
         .container { width: 100%; max-width: 850px; margin: auto; padding: 40px 20px; text-align: center; }
         .hidden { display: none !important; }
 
+        /* HEADER PARROQUIA Y LOGO */
         .logo-pst { max-width: 150px; height: auto; margin-bottom: 15px; border-radius: 10px; }
         .header-parroquia { margin-bottom: 30px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px; }
         .header-parroquia h2 { font-family: 'Playfair Display', serif; color: var(--oro); margin: 0; letter-spacing: 1px; font-size: 1.8rem; }
         .header-parroquia p { font-size: 0.85rem; text-transform: uppercase; margin: 5px 0 0; opacity: 0.8; font-weight: 700; }
 
+        /* RELOJ COLOMBIA */
         #reloj-colombia { font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8; font-weight: bold; }
 
+        /* BOTÓN DE VOZ */
         .btn-voz {
             position: fixed;
             bottom: 30px;
@@ -57,16 +60,22 @@
             100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
         }
 
-        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 25px 0; text-align: left; color: var(--texto-dark); line-height: 1.8; }
+        /* ESTILOS DE COMPONENTES */
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 25px 0; text-align: left; color: var(--texto-dark); animation: fadeIn 1s ease; line-height: 1.8; }
         textarea { width: 100%; height: 140px; border-radius: 15px; padding: 15px; margin: 15px 0; border: 2px solid var(--oro); font-size: 1rem; outline: none; background: rgba(255,255,255,0.9); }
-        button { background: var(--oro); color: white; border: none; padding: 18px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        button { background: var(--oro); color: white; border: none; padding: 18px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        button:hover { transform: scale(1.03); background: #b8962d; }
         
         .etapa-item { border-left: 5px solid var(--oro); padding-left: 25px; margin-bottom: 40px; }
         .etapa-titulo { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #a67c00; margin-bottom: 15px; }
+        .etapa-texto { text-align: justify; font-size: 1.05rem; }
         
         .nube { font-size: 80px; animation: flotar 3s infinite ease-in-out; }
         @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
         .creditos { font-size: 0.9rem; line-height: 1.6; color: #666; margin-top: 60px; border-top: 1px solid #ddd; padding-top: 30px; font-weight: 500; }
+        h1, h3 { font-family: 'Playfair Display', serif; }
     </style>
 </head>
 <body class="mood-tormenta">
@@ -77,21 +86,23 @@
         <img src="pst.PNG" alt="Logo Parroquia" class="logo-pst">
         <div class="header-parroquia">
             <h2>PARROQUIA DE LA SANTÍSIMA TRINIDAD</h2>
-            <p>CAUCASIA, ANTIOQUIA</p>
+            <p>Contacto Caucasia, Antioquia</p>
         </div>
 
         <div id="reloj-colombia">Cargando hora de Colombia...</div>
 
         <div id="step-esposa">
-            <h1>Tormenta: Esposa</h1>
+            <div style="font-size: 60px;">⚡</div>
+            <h1>Tormenta: Turno de la Esposa</h1>
             <p>Escriba con honestidad lo que genera tempestad en su corazón.</p>
-            <textarea id="msg-esposa" placeholder="Esposa, suelte aquí su carga..."></textarea>
+            <textarea id="msg-esposa" placeholder="Esposa, suelte aquí su carga ante el Señor..."></textarea>
             <br><button onclick="irAEsposo()">Siguiente Rayito</button>
         </div>
 
         <div id="step-esposo" class="hidden">
-            <h1>Tormenta: Esposo</h1>
-            <p>Caballero, abra su corazón ante el Señor.</p>
+            <div style="font-size: 60px;">⚡</div>
+            <h1>Tormenta: Turno del Esposo</h1>
+            <p>Caballero, abra su corazón ante Dios.</p>
             <textarea id="msg-esposo" placeholder="Esposo, entregue aquí lo que le angustia..."></textarea>
             <br><button onclick="irACalma()">Transformar en Calma</button>
         </div>
@@ -100,89 +111,82 @@
             <div class="nube">☁️</div>
             <h1>Nube de Esperanza</h1>
             <div id="biblia-dinamica"></div>
+
             <hr style="margin: 50px 0; border: 0; border-top: 2px dashed var(--oro);">
-            <h1 style="font-size: 2.5rem;">Las 7 Etapas del Amor</h1>
+
+            <h1 style="font-size: 2.5rem;">Las 7 Etapas del Amor Maduro</h1>
             <div id="etapas-container"></div>
-            <div class="card" style="background: #fff9e6; border: 1px solid #f9e2af;">
+
+            <div id="catedra-final" class="card" style="background: #fff9e6; border: 1px solid #f9e2af;">
                 <h2 style="text-align: center; color: #856404;">Cátedra del Buen Comportamiento</h2>
-                <p id="texto-catedra">Para restaurar la llama que los unió en el noviazgo, es imperativo implementar la Pedagogía del Amor. Esto implica volver a las bases: el saludo cálido, el agradecimiento y el perdón rápido. Recuerden que la cortesía no es solo para los extraños; es para el cónyuge. Un matrimonio saludable sabe comportarse con caridad en medio de las dificultades, manteniendo siempre la dignidad y el respeto por el sacramento jurado ante Dios.</p>
+                <p id="texto-catedra">Para restaurar la llama que los unió en el noviazgo, es imperativo implementar la Pedagogía del Amor. Esto implica volver a las bases: el saludo cálido, el agradecimiento por las pequeñas cosas y el perdón rápido. Recuerden que la cortesía no es solo para los extraños; es, sobre todo, para el cónyuge. Un matrimonio saludable no es aquel que no tiene problemas, sino aquel que sabe comportarse con caridad y ternura en medio de las dificultades, manteniendo siempre la dignidad y el respeto por el sacramento que un día juraron ante el altar de Dios.</p>
             </div>
+
             <div class="creditos">
                 <p>App desarrollada por: <strong>Vibras Positivas (3117700431)</strong></p>
-                <p>Parroquia <strong>La Santísima Trinidad</strong></p>
-                <p>Padre <strong>Joan Daza</strong></p>
+                <p>Para la Parroquia: <strong>La Santísima Trinidad (Barrio El Triángulo)</strong></p>
+                <p>Bajo la supervisión espiritual del: <strong>Padre Joan Daza</strong></p>
             </div>
-            <button onclick="reiniciarApp()" style="background: #333; margin-bottom: 60px;">Nuevo Proceso</button>
+            
+            <button onclick="reiniciarApp()" style="background: #333; margin-bottom: 60px;">Iniciar Nuevo Proceso</button>
         </div>
     </div>
 
     <script>
-        // SOLUCIÓN PARA MÓVILES: Inicializar el sintetizador
         let synth = window.speechSynthesis;
-        let voices = [];
-        
-        // Forzar carga de voces
-        function loadVoices() {
-            voices = synth.getVoices();
-        }
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadVoices;
-        }
-
         let hablando = false;
-        let utterance = null;
 
         function actualizarReloj() {
             const opciones = { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, day: '2-digit', month: 'long', year: 'numeric' };
             const ahora = new Date().toLocaleString('es-CO', opciones);
-            document.getElementById('reloj-colombia').innerHTML = "🇨🇴 " + ahora;
+            document.getElementById('reloj-colombia').innerHTML = "🇨🇴 Colombia: " + ahora;
         }
         setInterval(actualizarReloj, 1000);
         actualizarReloj();
 
         const baseBiblica = [
-            { v: "Marcos 4:39", t: "Callas, enmudece. Y cesó el viento, y se hizo grande bonanza.", c: "Jesús demostró que Su autoridad está por encima de cualquier crisis.", a: "Si sienten que su barca se hunde, invoquen a Cristo." },
-            { v: "1 Corintios 13:4-5", t: "El amor es sufrido, es benigno; el amor no tiene envidia; no guarda rencor.", c: "El amor no es una emoción, es una virtud constante.", a: "Cuando la irritación aparezca, decidan volver a empezar sin reproches." }
+            { v: "Marcos 4:39", t: "Callas, enmudece. Y cesó el viento, y se hizo grande bonanza.", c: "Los discípulos, aun con Jesús en la barca, sintieron miedo. Él demostró que Su autoridad está por encima de cualquier crisis.", a: "Si sienten que su barca se hunde, invoquen a Cristo. Él tiene el poder de restaurar la paz en su hogar." }
         ];
 
         function irAEsposo() {
-            if(document.getElementById('msg-esposa').value.length < 5) return alert("Escribe tu carga.");
+            if(document.getElementById('msg-esposa').value.length < 5) return alert("Escriba su carga.");
             document.getElementById('step-esposa').classList.add('hidden');
             document.getElementById('step-esposo').classList.remove('hidden');
         }
 
         function irACalma() {
-            if(document.getElementById('msg-esposo').value.length < 5) return alert("Escribe tu carga.");
+            if(document.getElementById('msg-esposo').value.length < 5) return alert("Escriba su carga.");
             document.body.className = "mood-calma";
             document.getElementById('step-esposo').classList.add('hidden');
             document.getElementById('step-calma').classList.remove('hidden');
             document.getElementById('btn-audio').classList.remove('hidden');
             
-            const random = baseBiblica[Math.floor(Math.random() * baseBiblica.length)];
+            const random = baseBiblica[0];
             document.getElementById('biblia-dinamica').innerHTML = `
                 <div class="card">
                     <h2 style="color: var(--oro); border-bottom: 1px solid #eee;">${random.v}</h2>
                     <p style="font-size: 1.2rem;"><i>"${random.t}"</i></p>
                     <p><strong>Adaptación:</strong> ${random.a}</p>
                 </div>`;
+
             mostrarEtapas();
             window.scrollTo(0,0);
         }
 
         const etapasData = [
-            { t: "1. Enamoramiento", d: "Es el fuego inicial. El desafío es convertir el sentimiento en decisión." },
-            { t: "2. Realidad", d: "Cae la idealización y emerge la persona real. Es un taller de santificación." },
-            { t: "3. Roles", d: "Aprender a ser un equipo. No se trata de quién manda, sino de servir." },
-            { t: "4. Estabilidad", d: "Riesgo de monotonía. El amor requiere leña constante y detalles." },
-            { t: "5. Amistad", d: "Complicidad pura. Son mejores amigos que eligen caminar juntos." },
-            { t: "6. Compromiso", d: "Mirar atrás con gratitud y reafirmar los votos ante Dios." },
-            { t: "7. Amor Agape", d: "La cima. Amor sacrificial y generoso, reflejo de Dios en ustedes." }
+            { t: "1. Transición y Enamoramiento (Eros)", d: "Esta es la etapa del deslumbramiento inicial, donde la atracción física y química domina el encuentro. Es un periodo de idealización profunda en el que los defectos del otro parecen inexistentes o incluso encantadores. Sin embargo, desde una perspectiva cristiana, el Eros no debe ser solo pasión ciega, sino el punto de partida para descubrir la belleza de la creación de Dios en el cónyuge. El desafío fundamental en este primer ciclo es entender que este fuego es transitorio por naturaleza y que su propósito divino es servir como el 'pegamento' inicial que permite a la pareja acercarse lo suficiente para comenzar a construir un proyecto de vida sólido sobre cimientos mucho más profundos que la simple apariencia o el deseo carnal." },
+            { t: "2. Realidad y Desilusión", d: "A medida que la convivencia avanza, la venda de la idealización cae y emerge la realidad humana con toda su complejidad. Aquí es donde los hábitos molestos, las diferencias de criterio y las debilidades personales se hacen evidentes. Muchos matrimonios entran en crisis en este punto porque confunden el fin del enamoramiento con el fin del amor. No obstante, esta etapa es crucial para el crecimiento, pues es el momento en que se deja de amar a una imagen perfecta para empezar a amar a una persona real. Es un llamado a la madurez espiritual donde la pareja debe aprender a negociar, a ceder y a comprender que el matrimonio es un taller de santificación mutua donde las asperezas se pulen con paciencia." },
+            { t: "3. Establecimiento de Roles y Poder", d: "En esta fase, la pareja lucha por definir quién tiene la autoridad en diferentes áreas o cómo se distribuirán las responsabilidades del hogar, las finanzas y la crianza. Es un periodo de 'ajuste de cuentas' donde pueden surgir conflictos por el control. La enseñanza de la Iglesia nos invita a ver esta etapa no como una lucha de poder, sino como una oportunidad para el servicio mutuo. No se trata de quién manda, sino de cómo ambos pueden servir mejor al bienestar de la familia. El éxito aquí depende de la capacidad de comunicación asertiva y de la humildad para reconocer que la unión matrimonial funciona mejor cuando se opera como un solo cuerpo, donde cada miembro aporta sus dones para el beneficio del conjunto, sin egoísmos." },
+            { t: "4. Estabilidad y Rutina", d: "Tras superar las luchas iniciales de roles, el matrimonio suele entrar en una meseta de tranquilidad que, paradójicamente, conlleva el riesgo de la monotonía. La vida se vuelve predecible y la atención se desplaza hacia los hijos, el trabajo o los compromisos sociales, descuidando a veces la relación de pareja. En esta etapa, es vital recordar que el amor es un fuego que requiere leña constante para no extinguirse. La estabilidad debe ser un refugio seguro, pero no como una zona de confort que justifique el descuido. Es el momento de reinventar los detalles, de cultivar intereses comunes y de asegurar que el cónyuge siga siendo la prioridad absoluta, protegiendo el espacio sagrado de la pareja." },
+            { t: "5. Profundización y Amistad (Philia)", d: "Aquí el amor trasciende la pasión y la simple convivencia para convertirse en una amistad profunda y sólida. Es la etapa de la complicidad, donde los esposos se conocen tanto que las palabras a veces sobran. Se han compartido alegrías inmensas y dolores profundos, lo que ha forjado un vínculo de lealtad inquebrantable. La 'Philia' representa ese amor de amigos que se eligen una y otra vez cada mañana. Desde la fe, este es el cumplimiento del compañerismo que Dios deseó para el hombre y la mujer. En esta fase, el matrimonio se convierte en un puerto seguro donde ambos encuentran descanso y comprensión, habiendo aprendido ya que la felicidad del otro es tan importante como la propia." },
+            { t: "6. Compromiso Renovado", d: "Llega un momento en que la pareja reflexiona sobre lo vivido y lo que falta por vivir. Pueden surgir dudas o el deseo de recuperar una juventud perdida, lo que a veces genera nuevas tensiones. Sin embargo, para un matrimonio cimentado en la roca de la fe, esta etapa es una invitación al compromiso renovado. Es el tiempo de mirar atrás con gratitud y hacia adelante con esperanza, reafirmando los votos con una conciencia mucho más clara de lo que implica la fidelidad. Es un periodo de gran fecundidad espiritual, donde la pareja, ya más sabia, puede servir de guía a otros matrimonios jóvenes, demostrando con su testimonio que el amor sí puede prevalecer sobre el tiempo si se mantiene la mirada puesta en Dios." },
+            { t: "7. Amor Incondicional (Agape)", d: "Esta es la cima del matrimonio, el reflejo más puro del amor de Dios por la humanidad. El amor Agape es aquel que se entrega totalmente sin esperar nada a cambio; es un amor sacrificial, generoso y lleno de gracia. En esta etapa, los esposos viven el uno para el otro con una ternura que ha sido purificada por los años. Ya no se busca la satisfacción personal, sino la santidad y el bienestar del compañero. Es un estado de paz profunda donde se comprende que el matrimonio fue el camino diseñado por Dios para llevarnos al Cielo. El Agape es la conclusión perfecta de la historia de amor, donde dos vidas se han fundido de tal manera que ya no son dos, sino una sola carne y un solo espíritu." }
         ];
 
         function mostrarEtapas() {
             let html = "";
             etapasData.forEach(e => {
-                html += `<div class="card etapa-item"><div class="etapa-titulo">${e.t}</div><p>${e.d}</p></div>`;
+                html += `<div class="card etapa-item"><div class="etapa-titulo">${e.t}</div><div class="etapa-texto">${e.d}</div></div>`;
             });
             document.getElementById('etapas-container').innerHTML = html;
         }
@@ -193,42 +197,37 @@
                 hablando = false;
                 actualizarBoton(false);
             } else {
-                // Crear el texto a leer
                 let texto = "Llega la calma. " + document.getElementById('biblia-dinamica').innerText + ". ";
-                texto += "Etapas del amor. ";
+                texto += "Las siete etapas del amor maduro. ";
                 etapasData.forEach(e => { texto += e.t + ". " + e.d + ". "; });
-                texto += "Cátedra final. " + document.getElementById('texto-catedra').innerText;
+                texto += "Cátedra del buen comportamiento. " + document.getElementById('texto-catedra').innerText;
 
-                utterance = new SpeechSynthesisUtterance(texto);
-                utterance.lang = 'es-ES';
+                let utterance = new SpeechSynthesisUtterance(texto);
+                
+                // Forzar idioma y buscar voz latina
+                utterance.lang = 'es-MX'; 
+                let voces = synth.getVoices();
+                let latina = voces.find(v => v.lang.includes('es-MX') || v.lang.includes('es-US') || v.lang.includes('es-CO'));
+                if(latina) utterance.voice = latina;
+                
                 utterance.rate = 0.9;
-                utterance.pitch = 1;
-
-                utterance.onstart = () => { hablando = true; actualizarBoton(true); };
                 utterance.onend = () => { hablando = false; actualizarBoton(false); };
-                utterance.onerror = () => { hablando = false; actualizarBoton(false); };
-
-                // SOLUCIÓN MÓVIL: Cancelar cualquier audio previo antes de hablar
+                
                 synth.cancel();
                 setTimeout(() => { synth.speak(utterance); }, 100);
+                hablando = true;
+                actualizarBoton(true);
             }
         }
 
         function actualizarBoton(isReading) {
             const btn = document.getElementById('btn-audio');
-            if(isReading) {
-                btn.classList.add('leyendo');
-                btn.innerHTML = "🛑";
-            } else {
-                btn.classList.remove('leyendo');
-                btn.innerHTML = "🔊";
-            }
+            if(isReading) { btn.classList.add('leyendo'); btn.innerHTML = "🛑"; }
+            else { btn.classList.remove('leyendo'); btn.innerHTML = "🔊"; }
         }
 
-        function reiniciarApp() {
-            synth.cancel();
-            location.reload();
-        }
+        function reiniciarApp() { synth.cancel(); location.reload(); }
+        window.speechSynthesis.onvoiceschanged = () => { synth.getVoices(); };
     </script>
 </body>
 </html>
